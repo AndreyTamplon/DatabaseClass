@@ -2,6 +2,7 @@ CREATE TABLE factory.workshops (
 	"id" serial NOT NULL,
 	"name" character varying(150) NOT NULL UNIQUE,
 	"workshop_leader" integer NOT NULL,
+	"factory_id" integer NOT NULL,
 	CONSTRAINT "workshops_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
@@ -159,6 +160,7 @@ CREATE TABLE factory.brigade_employees (
 CREATE TABLE factory.production_history (
 	"id" serial NOT NULL,
 	"product_id" integer NOT NULL,
+	"work_name" character varying(150) NOT NULL,
 	"section_id" integer NOT NULL,
 	"brigade_id" integer NOT NULL,
 	"start_time" timestamp with time zone,
@@ -166,6 +168,7 @@ CREATE TABLE factory.production_history (
 ) WITH (
   OIDS=FALSE
 );
+
 
 
 
@@ -227,7 +230,18 @@ CREATE TABLE factory.products (
 
 
 
+CREATE TABLE factory.factories (
+	"id" serial NOT NULL,
+	"name" character varying(150) NOT NULL UNIQUE,
+	CONSTRAINT "factories_pk" PRIMARY KEY ("id")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
 ALTER TABLE "workshops" ADD CONSTRAINT "workshops_fk0" FOREIGN KEY ("workshop_leader") REFERENCES "employees"("id");
+ALTER TABLE "workshops" ADD CONSTRAINT "workshops_fk1" FOREIGN KEY ("factory_id") REFERENCES "factories"("id");
 
 ALTER TABLE "sections" ADD CONSTRAINT "sections_fk0" FOREIGN KEY ("workshop_id") REFERENCES "workshops"("id");
 
@@ -277,6 +291,25 @@ ALTER TABLE "product_completion_history" ADD CONSTRAINT "product_completion_hist
 ALTER TABLE "test_completion_history" ADD CONSTRAINT "test_completion_history_fk0" FOREIGN KEY ("test_id") REFERENCES "testing_history"("id");
 
 ALTER TABLE "products" ADD CONSTRAINT "products_fk0" FOREIGN KEY ("type_id") REFERENCES "product_types"("id");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
