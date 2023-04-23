@@ -416,8 +416,8 @@ with products_in_work as (select ph.id as id, pt.name as name
                                    left join product_completion_history pch on ph.id = pch.work_id
                           where end_time is null and pc.id = :category_id and section_id = :section_id
                             and s.workshop_id = :workshop_id and factory_id = :factory_id)
-select count(*) from products_in_work;
--- select * from products_in_work;
+-- select count(*) from products_in_work;
+select * from products_in_work;
 
 -- В целом
 with products_in_work as (select ph.id as id, pt.name as name
